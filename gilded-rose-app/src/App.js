@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import '../src/test/texttest_fixture'
 
 function App() {
   return (

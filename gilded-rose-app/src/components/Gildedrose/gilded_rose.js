@@ -12,49 +12,68 @@ class Shop {
   }
 
   updateQuality() {
-    const { items } = this
+    const { items } = this;
 
-    for (var i = 0; i < items.length; i++) {
+    const handlerCheese = () => {
+      if (items[i].quality < 50)
+        items[i].quality = items[i].quality + 1
+    }
 
-      let name = items[i].name;
-      let quality = items[i].quality;
-      let sellIn = items[i].sellIn;
-
-      // Check quality 
-      if (name != 'Aged Brie' && name != 'Backstage passes to a TAFKAL80ETC concert' && name != 'Sulfuras, Hand of Ragnaros') {
-        if (quality > 0) quality = quality - 1;
-      } else {
-        if (quality < 50) {
-          quality = quality + 1;
-          if (name == 'Backstage passes to a TAFKAL80ETC concert') {
-            if (sellIn < 11 && quality < 50) quality = quality + 2;
-            if (sellIn < 6 && quality < 50) quality = quality + 3;
-          }
-          if (name == 'Sulfuras, Hand of Ragnaros') quality = 80
-        }
-      }
-
-      // Check sellIn
-      if (name != 'Sulfuras, Hand of Ragnaros') {
-        sellIn = sellIn - 1;
-      }
-      if (sellIn < 0) {
-        if (name != 'Aged Brie') || (name != 'Backstage passes to a TAFKAL80ETC concert') || (name != 'Sulfuras, Hand of Ragnaros') {
-          if (quality > 0) quality = quality - 4;
-        } else {
-          if (name == 'Backstage passes to a TAFKAL80ETC concert') quality = 0
-        }
-      } else {
-        if (quality < 50) {
-          quality = quality + 1;
-        }
+    const handlerBackstage = () => {
+      if (items[i].quality < 50) {
+        items[i].quality = items[i].quality + 1
+        if (items[i].sellIn < 11 && items[i].quality < 50) items[i].quality = items[i].quality + 1;
+        if (items[i].sellIn < 6 && items[i].quality < 50) items[i].quality = items[i].quality + 1;
       }
     }
-  }
+
+    const handlerLegendes = () => {
+      items[i].quality = items[i].quality
+      items[i].sellIn = 0
+    };
+
+    const other = () => {
+      if (items[i].quality > 0) {
+        if (items[i].quality < 50 & items[i].quality > 0) items[i].quality = items[i].quality - 1;
+        if (items[i].sellIn < 0) items[i].quality = items[i].quality - 1;
+      }
+
+    };
+
+    const Conjured = () => {
+
+
+    };
+    for (var i = 0; i < items.length; i++) {
+      let name = items[i].name
+
+      items[i].sellIn = items[i].sellIn - 1;
+
+      if (name.match('Conjured')) {
+        if (items[i].quality < 50 & items[i].quality > 0)
+          items[i].quality = items[i].quality - 1;
+      }
+
+      switch (name) {
+        case 'Aged Brie':
+          handlerCheese()
+          break
+        case 'Backstage passes to a TAFKAL80ETC concert':
+          handlerBackstage();
+          break
+        case 'Sulfuras, Hand of Ragnaros':
+          handlerLegendes();
+          break
+        default:
+          other();
+      }
+    }
 
     return items;
   }
+
 }
+
 module.exports = {
   Item,
   Shop
