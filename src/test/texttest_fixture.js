@@ -1,4 +1,4 @@
-import { Shop, Item } from "../components/Gildedrose/gilded_rose"
+import { Shop, Item } from "../helper/gilded_rose"
 
 const items = [
   new Item("+5 Dexterity Vest", 10, 20),
