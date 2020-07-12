@@ -1,0 +1,17 @@
+.table-style {
+    max-width: 150px;
+    max-height: 20px;
+}
+
+.tr-label {
+    width: 100%;
+    background: #F2E0C9;
+}
+
+.label-1 {
+    width: 75%;
+}
+
+.label {
+    font-size: 10;
+}

@@ -12,7 +12,10 @@ class Shop {
   }
 
   updateQuality() {
+    // const { items } = this is for more visibility in my code 
     const { items } = this;
+
+    //I have created functions inside the function "updateQuality" to better manage the product and to have an easier debugging
 
     const handlerCheese = () => {
       if (items[i].quality < 50)
@@ -20,10 +23,13 @@ class Shop {
     }
 
     const handlerBackstage = () => {
-      if (items[i].quality < 50) {
-        items[i].quality = items[i].quality + 1
-        if (items[i].sellIn < 11 && items[i].quality < 50) items[i].quality = items[i].quality + 1;
-        if (items[i].sellIn < 6 && items[i].quality < 50) items[i].quality = items[i].quality + 1;
+      if (items[i].sellIn < 0) items[i].quality = 0
+      else {
+        if (items[i].quality < 50) {
+          items[i].quality = items[i].quality + 1
+          if (items[i].sellIn < 11 && items[i].quality < 50) items[i].quality = items[i].quality + 1;
+          if (items[i].sellIn < 6 && items[i].quality < 50) items[i].quality = items[i].quality + 1;
+        }
       }
     }
 
@@ -32,7 +38,13 @@ class Shop {
       items[i].sellIn = 0
     };
 
+    const handelConjured = () => {
+      if (items[i].quality < 50 & items[i].quality > 0)
+        items[i].quality = items[i].quality - 1;
+    };
+
     const other = () => {
+      if (items[i].quality < 0 && items[i].sellIn < 0) items[i].quality = 0
       if (items[i].quality > 0) {
         if (items[i].quality < 50 & items[i].quality > 0) items[i].quality = items[i].quality - 1;
         if (items[i].sellIn < 0) items[i].quality = items[i].quality - 1;
@@ -41,23 +53,22 @@ class Shop {
 
     for (var i = 0; i < items.length; i++) {
       let name = items[i].name
-
       items[i].sellIn = items[i].sellIn - 1;
 
-      if (name.match('Conjured')) {
-        if (items[i].quality < 50 & items[i].quality > 0)
-          items[i].quality = items[i].quality - 1;
-      }
-
-      switch (name) {
-        case 'Aged Brie':
+      // I have used the match function to have a condition that can react to all the other products 
+      // I have grab the product name and then give it the function assigned to it
+      switch (true) {
+        case name.match('Conjured'):
           handlerCheese()
           break
-        case 'Backstage passes to a TAFKAL80ETC concert':
+        case name.match('Backstage'):
           handlerBackstage();
           break
-        case 'Sulfuras, Hand of Ragnaros':
+        case name.match('Sulfuras'):
           handlerLegendes();
+          break
+        case name.match('Conjured'):
+          handleConjured();
           break
         default:
           other();
